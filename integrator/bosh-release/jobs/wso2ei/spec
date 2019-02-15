@@ -4,6 +4,7 @@ templates:
   ctl.erb: bin/ctl
   conf/datasources/master-datasources.xml: conf/datasources/master-datasources.xml
   conf/carbon.xml: conf/carbon.xml
+  conf/axis2/axis2.xml.erb: conf/axis2/axis2.xml
 
 packages:
 - openjdk
@@ -11,11 +12,19 @@ packages:
 - wso2ei
 - common
 
+consumes:
+- name: nfs-server
+  type: nfs
+- name: peers
+  type: peers
+
 provides:
 - name: wso2ei
   type: wso2ei-node
   properties:
   - route_registrar.routes
+- name: peers
+  type: peers
 
 properties:
   wso2ei.memory.min_heap:
