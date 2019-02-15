@@ -1,0 +1,50 @@
+---
+name: wso2ei
+templates:
+  ctl.erb: bin/ctl
+  conf/datasources/master-datasources.xml: conf/datasources/master-datasources.xml
+  conf/carbon.xml: conf/carbon.xml
+
+packages:
+- openjdk
+- jdbcdrivers
+- wso2ei
+- common
+
+provides:
+- name: wso2ei
+  type: wso2ei-node
+  properties:
+  - route_registrar.routes
+
+properties:
+  wso2ei.memory.min_heap:
+    description: "Min Heap in MB"
+    default: 2048
+  wso2ei.memory.max_heap:
+    description: "Max Heap in MB"
+    default: 2048
+  wso2ei.memory.max_permgen:
+    description: "Max permgen in MB"
+    default: 1024
+  
+  wso2ei.password:
+    description: wso2ei password
+  wso2ei.username:
+    description: wso2ei username
+  wso2ei.address:
+    description: wso2ei address
+  
+  wso2ei.carbon_db.jdbc_url:
+    description: WSO2 Carbon database JDBC URL
+  wso2ei.carbon_db.driver:
+    description: WSO2 Carbon database database driver name
+  wso2ei.carbon_db.query:
+    description: WSO2 Carbon database database validation query
+  wso2ei.carbon_db.username:
+    description: WSO2 Carbon database username
+  wso2ei.carbon_db.password:
+    description: WSO2 Carbon database password
+
+  route_registrar.routes:
+    description: routes registered for WSO2 EI apps and gateway

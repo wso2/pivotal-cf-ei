@@ -1,0 +1,97 @@
+# ------------------------------------------------------------------------
+#
+# Copyright 2017 WSO2, Inc. (http://wso2.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License
+#
+# ------------------------------------------------------------------------
+---
+name: wso2ei-tile
+icon_file: resources/wso2-logo.png
+label: WSO2 Enterprise Integrator 6.4.0
+description: PCF Tile for WSO2 Enterprise Integrator 6.4.0
+
+stemcell_criteria:
+  os: ubuntu-trusty
+  requires_cpi: false
+  version: '3541'
+
+forms:
+- name: carbon_db
+  label: Carbon DB connection information
+  description: WSO2 Enterprise Integrator - Carbon Database connection information
+  properties:
+  - name: carbon_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: carbon_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: carbon_db_query
+    type: string
+    label: Validation Query
+  - name: carbon_db_username
+    type: string
+    label: Username
+  - name: carbon_db_password
+    type: secret
+    label: Password
+
+packages:
+- name: routing_release
+  type: bosh-release
+  path: routing-0.178.0.tgz
+
+- name: wso2_ei
+  type: bosh-release
+  path: wso2ei-6.4.0-bosh-release.tgz
+  jobs:
+  - name: wso2ei
+    instances: 1
+    templates:
+    - name: wso2ei
+      release: wso2ei-release
+    - name: route_registrar
+      release: routing
+      consumes:
+        nats:
+          from: nats
+          deployment: (( ..cf.deployment_name ))
+    memory: 4096
+    ephemeral_disk: 4096
+    persistent_disk: 16384
+    cpu: 2
+    static_ip: 1
+    max_in_flight: 1
+    properties:
+      wso2ei:
+        carbon_db:
+          jdbc_url: (( .properties.carbon_jdbc_url.value ))
+          driver: (( .properties.carbon_db_driver.value ))
+          query: (( .properties.carbon_db_query.value ))
+          username: (( .properties.carbon_db_username.value ))
+          password: (( .properties.carbon_db_password.value ))
+      route_registrar:
+        routes:
+        - name: wso2ei
+          port: 9763
+          tls_port: 9443
+          registration_interval: 20s
+          uris:
+          - wso2ei.(( ..cf.cloud_controller.system_domain.value ))
