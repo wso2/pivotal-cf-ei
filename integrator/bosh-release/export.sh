@@ -22,7 +22,7 @@
 set -e
 
 echo "Exporting WSO2 API-M bosh release..."
-bosh -e vbox create-release --tarball wso2ei-6.4.0-bosh-release.tgz
+bosh -e vbox create-release --tarball wso2ei-6.4.0-bosh-release.tgz --force
 echo "DONE!"
 
 # delete the existing BOSH environment after the release is made
