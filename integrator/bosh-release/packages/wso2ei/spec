@@ -1,0 +1,7 @@
+---
+name: wso2ei
+
+dependencies: []
+
+files:
+    - wso2ei/wso2ei-6.4.0.zip

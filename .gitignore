@@ -21,3 +21,25 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+.idea/
+**/.dev_builds/
+**/blobs/
+**/dev_releases/
+**/bosh-release/deployment/*
+**/dist/*
+!**/dist/.gitkeep
+**/.final_builds/*
+**/releases/*
+
+**/tile/product/
+**/tile/cache
+!**/tile/product/.gitkeep
+**/tile/release/
+**/tile/routing-0.178.0.tgz
+**/tile/wso2ei*
+**/tile/tile-history.yml
+
+**/bosh-release/wso2*
+
+*blobs.yml
