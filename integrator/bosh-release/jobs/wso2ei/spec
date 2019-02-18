@@ -2,6 +2,8 @@
 name: wso2ei
 templates:
   ctl.erb: bin/ctl
+  conf/datasources/master-datasources.xml.erb: conf/datasources/master-datasources.xml
+  conf/carbon.xml.erb: conf/carbon.xml
   conf/axis2/axis2.xml.erb: conf/axis2/axis2.xml
 
 packages:
