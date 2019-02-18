@@ -4,6 +4,8 @@ templates:
   ctl.erb: bin/ctl
   conf/datasources/master-datasources.xml.erb: conf/datasources/master-datasources.xml
   conf/carbon.xml.erb: conf/carbon.xml
+  conf/registry.xml.erb: conf/registry.xml
+  conf/user-mgt.xml.erb: conf/user-mgt.xml
   conf/axis2/axis2.xml.erb: conf/axis2/axis2.xml
 
 packages:
@@ -54,6 +56,17 @@ properties:
     description: WSO2 Carbon database username
   wso2ei.carbon_db.password:
     description: WSO2 Carbon database password
+
+  wso2ei.um_db.jdbc_url:
+    description: WSO2 User Management database JDBC URL
+  wso2ei.um_db.driver:
+    description: WSO2 User Management database database driver name
+  wso2ei.um_db.query:
+    description: WSO2 User Management database database validation query
+  wso2ei.um_db.username:
+    description: WSO2 User Management database username
+  wso2ei.um_db.password:
+    description: WSO2 User Management database password
 
   route_registrar.routes:
     description: routes registered for WSO2 EI apps and gateway

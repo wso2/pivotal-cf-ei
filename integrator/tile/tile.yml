@@ -52,6 +52,31 @@ forms:
   - name: carbon_db_password
     type: secret
     label: Password
+- name: um_db
+  label: UM DB connection information
+  description: User Manager Database connection information
+  properties:
+  - name: um_db_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: um_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: um_db_query
+    type: string
+    label: Validation Query
+  - name: um_db_username
+    type: string
+    label: Username
+  - name: um_db_password
+    type: secret
+    label: Password
 
 packages:
 - name: routing_release
@@ -91,6 +116,12 @@ packages:
     properties:
       wso2ei:
         carbon_db:
+          jdbc_url: (( .properties.carbon_jdbc_url.value ))
+          driver: (( .properties.carbon_db_driver.value ))
+          query: (( .properties.carbon_db_query.value ))
+          username: (( .properties.carbon_db_username.value ))
+          password: (( .properties.carbon_db_password.value ))
+        um_db:
           jdbc_url: (( .properties.carbon_jdbc_url.value ))
           driver: (( .properties.carbon_db_driver.value ))
           query: (( .properties.carbon_db_query.value ))
