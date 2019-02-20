@@ -46,16 +46,16 @@ properties:
   wso2ei.address:
     description: wso2ei address
   
-  wso2ei.carbon_db.jdbc_url:
-    description: WSO2 Carbon database JDBC URL
-  wso2ei.carbon_db.driver:
-    description: WSO2 Carbon database database driver name
-  wso2ei.carbon_db.query:
-    description: WSO2 Carbon database database validation query
-  wso2ei.carbon_db.username:
-    description: WSO2 Carbon database username
-  wso2ei.carbon_db.password:
-    description: WSO2 Carbon database password
+  wso2ei.reg_db.jdbc_url:
+    description: WSO2 Registry database JDBC URL
+  wso2ei.reg_db.driver:
+    description: WSO2 Registry database database driver name
+  wso2ei.reg_db.query:
+    description: WSO2 Registry database database validation query
+  wso2ei.reg_db.username:
+    description: WSO2 Registry database username
+  wso2ei.reg_db.password:
+    description: WSO2 Registry database password
 
   wso2ei.um_db.jdbc_url:
     description: WSO2 User Management database JDBC URL
