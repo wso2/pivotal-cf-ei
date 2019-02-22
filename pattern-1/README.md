@@ -24,13 +24,12 @@ For step-by-step guidelines to manage the BOSH release and build the PCF tile, r
 1. Install the following software.
 
     - [BOSH Command Line Interface (CLI) v2+](https://bosh.io/docs/cli-v2.html)
-    - [WSO2 Update Manager (WUM)](http://wso2.com/wum)
     - [Git client](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
     - Software requirements specific to the IaaS
 
 2. Obtain the following software distributions.
 
-    - WSO2 Enterprise Integrator 6.4.0 WUM updated product distribution
+    - WSO2 Enterprise Integrator 6.4.0 product distribution
     - [Java Development Kit (JDK) 1.8](https://adoptopenjdk.net/archive.html)
     - Relevant Java Database Connectivity (JDBC) connectors
         - [mssql-jdbc-7.0.0.jre8.jar](https://www.microsoft.com/en-us/download/details.aspx?id=57175)
@@ -93,7 +92,7 @@ To find the IP addresses of created instances via the BOSH CLI and access the WS
 2. List all the instances within a deployment.
 
     ```
-    bosh vms -d <Name>
+    bosh vms -d <name>
     ```
 3. SSH into the vm as follows.
 
