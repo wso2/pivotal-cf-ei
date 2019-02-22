@@ -1,0 +1,48 @@
+---
+name: wso2ei_analytics_dashboard
+templates:
+  ctl.erb: bin/ctl
+  conf/deployment.yaml: wso2/analytics/conf/dashboard/deployment.yaml
+
+packages:
+- openjdk
+- jdbcdrivers
+- wso2ei
+- common
+
+provides:
+- name: wso2ei_analytics_dashboard
+  type: dashboard-node
+
+properties:
+  wso2ei_analytics.memory.min_heap:
+    description: "Min Heap in MB"
+    default: 2048
+  wso2ei_analytics.memory.max_heap:
+    description: "Max Heap in MB"
+    default: 2048
+  wso2ei_analytics.memory.max_permgen:
+    description: "Max permgen in MB"
+    default: 1024
+
+  wso2ei_analytics.password:
+    description: wso2ei_analytics password
+  wso2ei_analytics.username:
+    description: wso2ei_analytics username
+  wso2ei_analytics.address:
+    description: wso2ei_analytics address
+
+  wso2ei.sp_cluster_db.jdbc_url:
+    description: WSO2 EI Analytics database JDBC URL
+  wso2ei.sp_cluster_db.driver:
+    description: WSO2 EI Analytics database database driver name
+  wso2ei.sp_cluster_db.query:
+    description: WSO2 EI Analytics database database validation query
+  wso2ei.sp_cluster_db.username:
+    description: WSO2 EI Analytics database username
+  wso2ei.sp_cluster_db.password:
+    description: WSO2 EI Analytics database password
+
+
+  route_registrar.routes:
+    description: routes registered for WSO2 EI apps and gateway

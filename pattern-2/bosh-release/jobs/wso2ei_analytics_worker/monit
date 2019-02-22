@@ -1,0 +1,7 @@
+check process wso2ei_analytics_worker
+  with pidfile /var/vcap/sys/run/wso2ei_analytics_worker/pid
+  start program "/var/vcap/jobs/wso2ei_analytics_worker/bin/ctl start"
+    with timeout 100 seconds
+  stop program "/var/vcap/jobs/wso2ei_analytics_worker/bin/ctl stop"
+    with timeout 30 seconds
+  group vcap

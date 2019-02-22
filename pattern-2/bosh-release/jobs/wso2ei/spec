@@ -1,0 +1,77 @@
+---
+name: wso2ei
+templates:
+  ctl.erb: bin/ctl
+  conf/datasources/master-datasources.xml.erb: conf/datasources/master-datasources.xml
+  conf/carbon.xml.erb: conf/carbon.xml
+  conf/registry.xml.erb: conf/registry.xml
+  conf/user-mgt.xml.erb: conf/user-mgt.xml
+  conf/synapse.properties: conf/synapse.properties
+  conf/axis2/axis2.xml.erb: conf/axis2/axis2.xml
+  repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml.erb: repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml
+  repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml.erb: repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml
+
+packages:
+- openjdk
+- jdbcdrivers
+- wso2ei
+- common
+
+consumes:
+- name: nfs-server
+  type: nfs
+- name: peers
+  type: peers
+- name: wso2ei_analytics_worker
+  type: worker-node
+
+provides:
+- name: wso2ei
+  type: wso2ei-node
+  properties:
+  - route_registrar.routes
+- name: peers
+  type: peers
+
+properties:
+  wso2ei.memory.min_heap:
+    description: "Min Heap in MB"
+    default: 2048
+  wso2ei.memory.max_heap:
+    description: "Max Heap in MB"
+    default: 2048
+  wso2ei.memory.max_permgen:
+    description: "Max permgen in MB"
+    default: 1024
+  
+  wso2ei.password:
+    description: wso2ei password
+  wso2ei.username:
+    description: wso2ei username
+  wso2ei.address:
+    description: wso2ei address
+  
+  wso2ei.reg_db.jdbc_url:
+    description: WSO2 Registry database JDBC URL
+  wso2ei.reg_db.driver:
+    description: WSO2 Registry database database driver name
+  wso2ei.reg_db.query:
+    description: WSO2 Registry database database validation query
+  wso2ei.reg_db.username:
+    description: WSO2 Registry database username
+  wso2ei.reg_db.password:
+    description: WSO2 Registry database password
+
+  wso2ei.um_db.jdbc_url:
+    description: WSO2 User Management database JDBC URL
+  wso2ei.um_db.driver:
+    description: WSO2 User Management database database driver name
+  wso2ei.um_db.query:
+    description: WSO2 User Management database database validation query
+  wso2ei.um_db.username:
+    description: WSO2 User Management database username
+  wso2ei.um_db.password:
+    description: WSO2 User Management database password
+
+  route_registrar.routes:
+    description: routes registered for WSO2 EI apps and gateway

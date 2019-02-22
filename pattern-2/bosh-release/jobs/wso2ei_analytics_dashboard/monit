@@ -1,0 +1,7 @@
+check process wso2ei_analytics_dashboard
+  with pidfile /var/vcap/sys/run/wso2ei_analytics_dashboard/pid
+  start program "/var/vcap/jobs/wso2ei_analytics_dashboard/bin/ctl start"
+    with timeout 100 seconds
+  stop program "/var/vcap/jobs/wso2ei_analytics_dashboard/bin/ctl stop"
+    with timeout 30 seconds
+  group vcap

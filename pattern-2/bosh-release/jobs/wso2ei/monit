@@ -1,0 +1,7 @@
+check process wso2ei
+  with pidfile /var/vcap/sys/run/wso2ei/pid
+  start program "/var/vcap/jobs/wso2ei/bin/ctl start"
+    with timeout 100 seconds
+  stop program "/var/vcap/jobs/wso2ei/bin/ctl stop"
+    with timeout 30 seconds
+  group vcap
