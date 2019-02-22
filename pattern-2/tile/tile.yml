@@ -1,0 +1,226 @@
+# ------------------------------------------------------------------------
+#
+# Copyright 2019 WSO2, Inc. (http://wso2.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License
+#
+# ------------------------------------------------------------------------
+---
+name: wso2ei-tile
+icon_file: resources/wso2-logo.png
+label: WSO2 Enterprise Integrator 6.4.0
+description: PCF Tile for WSO2 Enterprise Integrator 6.4.0
+
+stemcell_criteria:
+  os: ubuntu-xenial
+  requires_cpi: false
+  version: '170.15'
+
+forms:
+- name: reg_db
+  label: Registry DB connection information
+  description: WSO2 Enterprise Integrator - Registry Database connection information
+  properties:
+  - name: reg_db_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: reg_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: reg_db_query
+    type: string
+    label: Validation Query
+  - name: reg_db_username
+    type: string
+    label: Username
+  - name: reg_db_password
+    type: secret
+    label: Password
+- name: um_db
+  label: UM DB connection information
+  description: User Manager Database connection information
+  properties:
+  - name: um_db_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: um_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: um_db_query
+    type: string
+    label: Validation Query
+  - name: um_db_username
+    type: string
+    label: Username
+  - name: um_db_password
+    type: secret
+    label: Password
+- name: sp_cluster_db
+  label: EI Analytics Cluster DB connection information
+  description: WSO2 Enterprise Integrator - Analytics Clustering Database connection information
+  properties:
+  - name: sp_db_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: sp_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: sp_db_query
+    type: string
+    label: Validation Query
+  - name: sp_db_username
+    type: string
+    label: Username
+  - name: sp_db_password
+    type: secret
+    label: Password
+
+packages:
+- name: routing_release
+  type: bosh-release
+  path: routing-0.178.0.tgz
+
+- name: wso2_ei
+  type: bosh-release
+  path: wso2ei-6.4.0-bosh-release.tgz
+  jobs:
+  - name: nfs_server
+    templates:
+    - name: nfs_server
+      release: wso2ei-release
+    memory: 4096
+    ephemeral_disk: 4096
+    persistent_disk: 16384
+    cpu: 2
+    static_ip: 1
+  - name: wso2ei_analytics_worker
+    templates:
+    - name: wso2ei_analytics_worker
+      release: wso2ei-release
+    - name: route_registrar
+      release: routing
+      consumes:
+        nats:
+          from: nats
+          deployment: (( ..cf.deployment_name ))
+    memory: 4096
+    ephemeral_disk: 4096
+    persistent_disk: 16384
+    cpu: 2
+    static_ip: 1
+    max_in_flight: 1
+    properties:
+      wso2ei:
+        sp_cluster_db:
+          jdbc_url: (( .properties.sp_db_jdbc_url.value ))
+          driver: (( .properties.sp_db_driver.value ))
+          query: (( .properties.sp_db_query.value ))
+          username: (( .properties.sp_db_username.value ))
+          password: (( .properties.sp_db_password.value ))
+      route_registrar:
+        routes:
+        - name: wso2ei-analytics-worker
+          port: 7712
+          tls_port: 7612
+          registration_interval: 20s
+          uris:
+          - wso2ei-worker.(( ..cf.cloud_controller.system_domain.value ))
+  - name: wso2ei_analytics_dashboard
+    templates:
+    - name: wso2ei_analytics_dashboard
+      release: wso2ei-release
+    - name: route_registrar
+      release: routing
+      consumes:
+        nats:
+          from: nats
+          deployment: (( ..cf.deployment_name ))
+    memory: 4096
+    ephemeral_disk: 4096
+    persistent_disk: 16384
+    cpu: 2
+    static_ip: 1
+    max_in_flight: 1
+    properties:
+      wso2ei:
+        sp_cluster_db:
+          jdbc_url: (( .properties.sp_db_jdbc_url.value ))
+          driver: (( .properties.sp_db_driver.value ))
+          query: (( .properties.sp_db_query.value ))
+          username: (( .properties.sp_db_username.value ))
+          password: (( .properties.sp_db_password.value ))
+      route_registrar:
+        routes:
+        - name: wso2ei_analytics_dashboard
+          port: 9764
+          tls_port: 9643
+          registration_interval: 20s
+          uris:
+          - wso2ei-dashboard.(( ..cf.cloud_controller.system_domain.value ))
+  - name: wso2ei
+    instances: 2
+    templates:
+    - name: wso2ei
+      release: wso2ei-release
+    - name: route_registrar
+      release: routing
+      consumes:
+        nats:
+          from: nats
+          deployment: (( ..cf.deployment_name ))
+    memory: 4096
+    ephemeral_disk: 4096
+    persistent_disk: 16384
+    cpu: 2
+    static_ip: 1
+    max_in_flight: 1
+    properties:
+      wso2ei:
+        reg_db:
+          jdbc_url: (( .properties.reg_db_jdbc_url.value ))
+          driver: (( .properties.reg_db_driver.value ))
+          query: (( .properties.reg_db_query.value ))
+          username: (( .properties.reg_db_username.value ))
+          password: (( .properties.reg_db_password.value ))
+        um_db:
+          jdbc_url: (( .properties.um_db_jdbc_url.value ))
+          driver: (( .properties.um_db_driver.value ))
+          query: (( .properties.um_db_query.value ))
+          username: (( .properties.um_db_username.value ))
+          password: (( .properties.um_db_password.value ))
+      route_registrar:
+        routes:
+        - name: wso2ei
+          port: 9763
+          tls_port: 9443
+          registration_interval: 20s
+          uris:
+          - wso2ei.(( ..cf.cloud_controller.system_domain.value ))
