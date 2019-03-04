@@ -22,9 +22,9 @@ label: WSO2 Enterprise Integrator 6.4.0
 description: PCF Tile for WSO2 Enterprise Integrator 6.4.0
 
 stemcell_criteria:
-  os: ubuntu-trusty
+  os: ubuntu-xenial
   requires_cpi: false
-  version: '3541'
+  version: '170.15'
 
 forms:
 - name: reg_db
@@ -107,6 +107,13 @@ packages:
         nats:
           from: nats
           deployment: (( ..cf.deployment_name ))
+    - name: health_check
+      release: wso2ei-release
+      colocated: true
+      post_deploy: true
+      run_default: on
+      label: Integrator Health Check
+      description: Checks if the Integrator is up and running
     memory: 4096
     ephemeral_disk: 4096
     persistent_disk: 16384
