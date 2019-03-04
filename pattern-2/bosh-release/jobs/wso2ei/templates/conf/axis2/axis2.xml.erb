@@ -593,7 +593,7 @@
            "membershipScheme" above is set to "wka"
         -->
         <members>
-            <%- (link("peers").instances.map(&:address)).each do |ip_address| -%>
+            <%- (link("integrator-peers").instances.map(&:address)).each do |ip_address| -%>
             <member>
                 <hostName><%= ip_address %></hostName>
                 <port>4000</port>
