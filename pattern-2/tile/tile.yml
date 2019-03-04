@@ -163,6 +163,13 @@ packages:
         nats:
           from: nats
           deployment: (( ..cf.deployment_name ))
+    - name: health_check
+      release: wso2ei-release
+      colocated: true
+      post_deploy: true
+      run_default: on
+      label: Dashboard Health Check
+      description: Checks if the analytics dashboard is up and running
     memory: 4096
     ephemeral_disk: 4096
     persistent_disk: 16384
@@ -170,6 +177,9 @@ packages:
     static_ip: 1
     max_in_flight: 1
     properties:
+      health_check:
+        endpoint: "https://localhost:9643/monitoring/login"
+        name: "Analytics Dashboard Portal"
       wso2ei:
         sp_cluster_db:
           jdbc_url: (( .properties.sp_db_jdbc_url.value ))
@@ -196,6 +206,13 @@ packages:
         nats:
           from: nats
           deployment: (( ..cf.deployment_name ))
+    - name: health_check
+      release: wso2ei-release
+      colocated: true
+      post_deploy: true
+      run_default: on
+      label: Integrator Health Check
+      description: Checks if the Integrator is up and running
     memory: 4096
     ephemeral_disk: 4096
     persistent_disk: 16384
@@ -203,6 +220,9 @@ packages:
     static_ip: 1
     max_in_flight: 1
     properties:
+      health_check:
+        endpoint: "https://localhost:9443/carbon/admin/login.jsp"
+        name: "Integrator Carbon"
       wso2ei:
         reg_db:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))

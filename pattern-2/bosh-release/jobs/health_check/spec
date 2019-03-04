@@ -1,0 +1,13 @@
+---
+name: health_check
+
+templates:
+    run.sh.erb: bin/run
+
+packages: []
+
+properties:
+  health_check.endpoint:
+    description: Health Check endpoint
+  health_check.name:
+    description: Health Check name
