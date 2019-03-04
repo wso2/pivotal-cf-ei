@@ -125,12 +125,6 @@ packages:
     templates:
     - name: wso2ei_analytics_worker
       release: wso2ei-release
-    - name: route_registrar
-      release: routing
-      consumes:
-        nats:
-          from: nats
-          deployment: (( ..cf.deployment_name ))
     memory: 4096
     ephemeral_disk: 4096
     persistent_disk: 16384
@@ -145,14 +139,6 @@ packages:
           query: (( .properties.sp_db_query.value ))
           username: (( .properties.sp_db_username.value ))
           password: (( .properties.sp_db_password.value ))
-      route_registrar:
-        routes:
-        - name: wso2ei-analytics-worker
-          port: 7712
-          tls_port: 7612
-          registration_interval: 20s
-          uris:
-          - wso2ei-worker.(( ..cf.cloud_controller.system_domain.value ))
   - name: wso2ei_analytics_dashboard
     templates:
     - name: wso2ei_analytics_dashboard

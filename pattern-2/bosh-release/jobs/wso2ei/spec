@@ -20,7 +20,7 @@ packages:
 consumes:
 - name: nfs-server
   type: nfs
-- name: peers
+- name: integrator-peers
   type: peers
 - name: wso2ei_analytics_worker
   type: worker-node
@@ -30,7 +30,7 @@ provides:
   type: wso2ei-node
   properties:
   - route_registrar.routes
-- name: peers
+- name: integrator-peers
   type: peers
 
 properties:
