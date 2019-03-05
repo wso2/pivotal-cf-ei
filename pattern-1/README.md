@@ -5,7 +5,7 @@ This repository contains resources required to build and install WSO2 Enterprise
 ## Prerequisites
 Before starting the installation process, ensure that the following prerequisites are completed:
 - A pre-configured Pivotal environment: For more information on the process for setting up the Pivotal environment on AWS, Azure, and GCP, see the documentation provided by Pivotal in [Architecture and Installation Overview](https://docs.pivotal.io/pivotalcf/2-4/installing/index.html).
-- An SQL Database (MySQL or MS SQL): This database should contain the tables required to run Enterprise Integrator. The database schema required to populate the tables can be found within the <APIM_HOME>/dbscripts/ directory, where <APIM_HOME> refers to the [Enterprise Integrator Binary](https://wso2.com/api-management/).
+- An SQL Database (MySQL or MS SQL): This database should contain the tables required to run Enterprise Integrator. The database schema required to populate the tables can be found within the <EI_HOME>/dbscripts/ directory, where <EI_HOME> refers to the [Enterprise Integrator Binary](https://wso2.com/integration/install/binary/).
 - BOSH [CLI](https://bosh.io/docs/cli-v2/).
 - PCF Tile Generator [CLI](https://docs.pivotal.io/tiledev/2-3/tile-generator.html).
 
@@ -15,7 +15,7 @@ The first step in running Enterprise Integrator on PCF is creating a BOSH releas
     ```bash
     git clone https://github.com/wso2/pivotal-cf-ei.git
     ```
-    Enterprise Integrator contains five main components named Publisher, Store, Gateway, Traffic Manager, and Key Manager. In a stand-alone APIM setup, these components are deployed in a single server. However, in a typical production setup, they need to be deployed in separate servers for better performance. Installing and configuring each or selected component/s in different servers is known as a distributed setup.
+    Enterprise Integrator contains one component named Integrator. In a stand-alone EI setup, these components are deployed in a single server. However, in a typical production setup, they need to be deployed in separate servers for better performance. Installing and configuring each or selected component/s in different servers is known as a distributed setup.
     
     There are multiple ways in which these distributed setups can be arranged. These are known as **Deployment Patterns**. The PCF resources for Enterprise Integrator supports Pattern 1.
         
@@ -42,7 +42,7 @@ The first step in running Enterprise Integrator on PCF is creating a BOSH releas
                 
 3. Create the BOSH release
     
-    In order to create the BOSH release, the resource provides two scripts with the deployment. The scripts must be run in the following order:
+    In order to create the BOSH release, the following script must be executed:
     ```bash
     ./create.sh
     ```
@@ -108,10 +108,11 @@ The first step in running Enterprise Integrator on PCF is creating a BOSH releas
         Note that the JDBC URL for MySQL does not contain `&amp;`. Instead, it indicates the `&` symbol. This is due to the fact that the first two configurations save the configuration data in XML format, and `&amp;` is used as an escape character. However, this configuration stores its data in YAML and therefore, an escape character is not required.
         
         Click Save.
-        
-    5. Return to the **Installation Dashboard** in Ops Manager and click **Review Pending Changes**.
+    5. Errands contain health check jobs for the Integrator nodes. These jobs check if the nodes are alive, and responding to requests as expected. These health checks begin running after the relevant nodes have been deployed. The execution of errands are enabled by default. However, users have the option to disable the execution of errands.
+    6. Resource Config contains deployment information for each job. Users have the options to change the number of instances, persistent disk types, VM types, etc. for each job.
+    7. Return to the **Installation Dashboard** in Ops Manager and click **Review Pending Changes**.
         ![review-changes](images/review-changes.png "Review Pending Changes")
-    6. Select the checkbox for Enterprise Integrator and click **Apply Changes**.
+    8. Select the checkbox for Enterprise Integrator and click **Apply Changes**.
         ![apply-changes](images/apply-changes.png "Apply Changes")
         
         The installation process may take around 25 minutes. After the installation is complete, the management console, and analytics portal can be accessed via the following URLs where domain_name refers to the **domain name** of the PCF environment.
