@@ -121,6 +121,9 @@ packages:
     static_ip: 1
     max_in_flight: 1
     properties:
+      health_check:
+        endpoint: "https://localhost:9443/carbon/admin/login.jsp"
+        name: "Integrator Carbon"
       wso2ei:
         reg_db:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
