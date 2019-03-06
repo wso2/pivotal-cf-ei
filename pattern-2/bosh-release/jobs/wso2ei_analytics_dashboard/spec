@@ -43,6 +43,5 @@ properties:
   wso2ei.sp_cluster_db.password:
     description: WSO2 EI Analytics database password
 
-
   route_registrar.routes:
     description: routes registered for WSO2 EI apps and gateway
