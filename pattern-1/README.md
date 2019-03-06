@@ -94,18 +94,6 @@ The first step in running Enterprise Integrator on PCF is creating a BOSH releas
         * **Validation Query**: `SELECT 1`
         * **Username**: Username for database
         * **Password**: Password for database
-            
-            Click Save.
-    4. Enterprise Integrator - Analytics Clustering Database connection information
-        * **JDBC URL**:
-            * **MySQL**: `jdbc:mysql://<hostname>:<port>/<db_name>?autoReconnect=true&useSSL=false`
-            * **MS SQL**: `jdbc:sqlserver://<hostname>:<port>;databaseName=<db_name>;`
-        * **Driver Class Name**: Select the class name of the JDBC driver relevant to the database being used.
-        * **Validation Query**: `SELECT 1`
-        * **Username**: Username for database
-        * **Password**: Password for database
-        
-        Note that the JDBC URL for MySQL does not contain `&amp;`. Instead, it indicates the `&` symbol. This is due to the fact that the first two configurations save the configuration data in XML format, and `&amp;` is used as an escape character. However, this configuration stores its data in YAML and therefore, an escape character is not required.
         
         Click Save.
     5. Errands contain health check jobs for the Integrator nodes. These jobs check if the nodes are alive, and responding to requests as expected. These health checks begin running after the relevant nodes have been deployed. The execution of errands are enabled by default. However, users have the option to disable the execution of errands.
@@ -118,4 +106,3 @@ The first step in running Enterprise Integrator on PCF is creating a BOSH releas
         The installation process may take around 25 minutes. After the installation is complete, the management console, and analytics portal can be accessed via the following URLs where domain_name refers to the **domain name** of the PCF environment.
         
         * ``https://wso2ei.sys.<domain_name>/carbon/``
-        * ``https://wso2ei-dashboard.sys.<domain_name>/portal/``
