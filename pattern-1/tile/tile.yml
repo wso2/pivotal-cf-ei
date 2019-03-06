@@ -124,6 +124,7 @@ packages:
       health_check:
         endpoint: "https://localhost:9443/carbon/admin/login.jsp"
         name: "Integrator Carbon"
+        status_code: 200
       wso2ei:
         reg_db:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
