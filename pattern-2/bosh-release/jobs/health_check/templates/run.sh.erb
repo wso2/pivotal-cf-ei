@@ -10,8 +10,8 @@ health_check() {
     then
         status_code=$(curl --write-out %{http_code} --silent --output /dev/null -k ${1})
 
-        # Check if requests to the health check endpoint produces  200 response
-        if [[ "$status_code" -ne 200 ]] ; then
+        # Check if requests to the health check endpoint produces the expected response
+        if [[ "$status_code" -ne <%= p("health_check.status_code") %> ]] ; then
             >&2 echo "WSO2 EI $2 produces an invalid response: $status_code"
             exit 1
         else
