@@ -46,12 +46,9 @@ forms:
   - name: reg_db_query
     type: string
     label: Validation Query
-  - name: reg_db_username
-    type: string
-    label: Username
-  - name: reg_db_password
-    type: secret
-    label: Password
+  - name: reg_db_credentials
+    label: Registry DB Credentials
+    type: simple_credentials
 - name: um_db
   label: UM DB connection information
   description: User Manager Database connection information
@@ -71,12 +68,9 @@ forms:
   - name: um_db_query
     type: string
     label: Validation Query
-  - name: um_db_username
-    type: string
-    label: Username
-  - name: um_db_password
-    type: secret
-    label: Password
+  - name: um_db_credentials
+    label: User Management DB Credentials
+    type: simple_credentials
 
 packages:
 - name: routing_release
@@ -130,14 +124,14 @@ packages:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))
           query: (( .properties.reg_db_query.value ))
-          username: (( .properties.reg_db_username.value ))
-          password: (( .properties.reg_db_password.value ))
+          username: (( .properties.reg_db_credentials.identity ))
+          password: (( .properties.reg_db_credentials.password ))
         um_db:
           jdbc_url: (( .properties.um_db_jdbc_url.value ))
           driver: (( .properties.um_db_driver.value ))
           query: (( .properties.um_db_query.value ))
-          username: (( .properties.um_db_username.value ))
-          password: (( .properties.um_db_password.value ))
+          username: (( .properties.um_db_credentials.identity ))
+          password: (( .properties.um_db_credentials.password ))
       route_registrar:
         routes:
         - name: wso2ei
