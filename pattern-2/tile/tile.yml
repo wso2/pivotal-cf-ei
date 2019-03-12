@@ -93,6 +93,72 @@ forms:
   - name: sp_db_credentials
     label: Cluster DB Credentials
     type: simple_credentials
+- name: sp_persistence_db
+  label: EI Analytics Persistence DB connection information
+  description: WSO2 Enterprise Integrator - Persistence Database connection information
+  properties:
+  - name: sp_persistence_db_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: sp_persistence_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: sp_persistence_db_query
+    type: string
+    label: Validation Query
+  - name: sp_persistence_db_credentials
+    label: Persistence DB Credentials
+    type: simple_credentials
+- name: sp_analytics_db
+  label: EI Analytics DB connection information
+  description: WSO2 Enterprise Integrator - Analytics Database connection information
+  properties:
+  - name: sp_analytics_db_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: sp_analytics_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: sp_analytics_db_query
+    type: string
+    label: Validation Query
+  - name: sp_analytics_db_credentials
+    label: Analytics DB Credentials
+    type: simple_credentials
+- name: carbon_db
+  label: EI Carbon DB connection information
+  description: WSO2 Enterprise Integrator - Carbon Database connection information
+  properties:
+  - name: carbon_db_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: carbon_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: carbon_db_query
+    type: string
+    label: Validation Query
+  - name: carbon_db_credentials
+    label: Carbon DB Credentials
+    type: simple_credentials
 
 packages:
 - name: routing_release
@@ -130,6 +196,24 @@ packages:
           query: (( .properties.sp_db_query.value ))
           username: (( .properties.sp_db_credentials.identity ))
           password: (( .properties.sp_db_credentials.password ))
+        sp_persistence_db:
+          jdbc_url: (( .properties.sp_persistence_db_jdbc_url.value ))
+          driver: (( .properties.sp_persistence_db_driver.value ))
+          query: (( .properties.sp_persistence_db_query.value ))
+          username: (( .properties.sp_persistence_db_credentials.identity ))
+          password: (( .properties.sp_persistence_db_credentials.password ))
+        sp_analytics_db:
+          jdbc_url: (( .properties.sp_analytics_db_jdbc_url.value ))
+          driver: (( .properties.sp_analytics_db_driver.value ))
+          query: (( .properties.sp_analytics_db_query.value ))
+          username: (( .properties.sp_analytics_db_credentials.identity ))
+          password: (( .properties.sp_analytics_db_credentials.password ))
+        carbon_db:
+          jdbc_url: (( .properties.carbon_db_jdbc_url.value ))
+          driver: (( .properties.carbon_db_driver.value ))
+          query: (( .properties.carbon_db_query.value ))
+          username: (( .properties.carbon_db_credentials.identity ))
+          password: (( .properties.carbon_db_credentials.password ))
   - name: wso2ei_analytics_dashboard
     templates:
     - name: wso2ei_analytics_dashboard
