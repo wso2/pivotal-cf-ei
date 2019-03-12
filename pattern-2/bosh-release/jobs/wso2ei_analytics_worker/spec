@@ -42,3 +42,36 @@ properties:
     description: WSO2 EI Analytics database username
   wso2ei.sp_cluster_db.password:
     description: WSO2 EI Analytics database password
+
+  wso2ei.sp_persistence_db.jdbc_url:
+    description: WSO2 EI Analytics Persistence database JDBC URL
+  wso2ei.sp_persistence_db.driver:
+    description: WSO2 EI Analytics Persistence database database driver name
+  wso2ei.sp_persistence_db.query:
+    description: WSO2 EI Analytics Persistence database database validation query
+  wso2ei.sp_persistence_db.username:
+    description: WSO2 EI Analytics Persistence database username
+  wso2ei.sp_persistence_db.password:
+    description: WSO2 EI Analytics Persistence database password
+
+  wso2ei.sp_analytics_db.jdbc_url:
+    description: WSO2 EI Analytics database JDBC URL
+  wso2ei.sp_analytics_db.driver:
+    description: WSO2 EI Analytics database database driver name
+  wso2ei.sp_analytics_db.query:
+    description: WSO2 EI Analytics database database validation query
+  wso2ei.sp_analytics_db.username:
+    description: WSO2 EI Analytics database username
+  wso2ei.sp_analytics_db.password:
+    description: WSO2 EI Analytics database password
+
+  wso2ei.carbon_db.jdbc_url:
+    description: WSO2 EI Carbon database JDBC URL
+  wso2ei.carbon_db.driver:
+    description: WSO2 EI Carbon database database driver name
+  wso2ei.carbon_db.query:
+    description: WSO2 EI Carbon database database validation query
+  wso2ei.carbon_db.username:
+    description: WSO2 EI Carbon database username
+  wso2ei.carbon_db.password:
+    description: WSO2 EI Carbon database password
